@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-md-4">
+    Disponibles: <input type="checkbox" #ckDisponible class="form-control" id="disponible" />
+  </div>
+  <div class="col-md-4">
+    Valor Mayor a 30,000: <input type="checkbox" class="form-control" #ckMayora3 id="mayora3" />
+  </div>
+  <div class="col-md-4">
+    Valor Menor a 10,000: <input type="checkbox" class="form-control" #ckMenora1 id="Menora1" />
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5">
+    Ordenar: <select class="form-control" #cbOrden id="ordenar">
+      <option value="1" selected>Nombre</option>
+      <option value="2">Menor precio</option>
+      <option value="3">Mayor precio</option>
+    </select>
+  </div>
+  <div class="col-md-7">
+    Buscar por nombre <input type="search" class="form-control" #txtBusqueda id="BusquedaNombre" />
+  </div>
+</div>
+<br />
+<input type="button" value="Aplicar" (click)="Aplicar()" class="btn btn-info" />
+<br />
+<br />
+<div *ngFor="let prod of lstProductos | async">
+  <div class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-8"><b>Nombre del producto:</b>{{ prod.name }}</div><div class="col-md-4"> ID: {{ prod.id }}</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-8">
+          <div>{{ prod.description }}</div>
+          <div>Valor: {{ prod.price }}</div>
+          <div>{{ prod.categories }}</div>
+          <div *ngIf="prod.best_seller">¡Es la mejor compra!</div>
+        </div>
+        <div class="col-md-4">
+          <img src="{{ prod.img }}" alt="foto" />
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <input type="button" value="Agregar al carro de compras" class="btn btn-info" *ngIf="prod.available; else elseBlock" />
+      <ng-template #elseBlock>Producto sin inventario</ng-template>
+    </div>
+
+  </div>
+  <hr />
+</div>
